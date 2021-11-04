@@ -28,33 +28,6 @@ export const signInAction = (user) => {
     };
 };
 
-export const UPDATE_PROFILE = "UPDATE_PROFILE";
-export const updateProfileAction = (user) => {
-    return {
-        type: UPDATE_PROFILE,
-        payload: {
-            user
-        }
-    };
-};
-
-export const UPDATE_BUDGET = "UPDATE_BUDGET";
-export const updateBudgetAction = () => {
-    return {
-        type: UPDATE_BUDGET,
-    };
-};
-
-export const UPDATE_PROFILE_ERROR = "UPDATE_PROFILE_ERROR";
-export const updateProfileError = (errors) => {
-    return {
-        type: UPDATE_PROFILE_ERROR,
-        payload: {
-            errors
-        }
-    };
-};
-
 export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
 export const signInError = (errors) => {
     return {
@@ -69,5 +42,12 @@ export const SIGN_OUT = "SIGN_OUT";
 export const signOutAction = () => {
     return {
         type: SIGN_OUT
+    };
+};
+
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const clearErrorsAction = () => {
+    return {
+        type: CLEAR_ERRORS
     };
 };

@@ -2,7 +2,8 @@ const initialState = {
     user: {
         errors: {
             email: null,
-            password: null
+            password: null,
+            password_confirm: null,
         }
     },
 }
