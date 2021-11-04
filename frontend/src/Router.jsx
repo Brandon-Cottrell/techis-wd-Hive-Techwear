@@ -6,7 +6,6 @@ import Cart from './containers/Cart';
 import Checkout from './containers/Checkout';
 import Homepage from './containers/Homepage';
 import Landing from './containers/Landing';
-import Home from './containers/Landing';
 import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
 import ThankYou from './containers/ThankYou';
@@ -25,10 +24,9 @@ const Router = () => {
 
     return (
         <Switch>
-            <Route exact path={"/"} component={token ? Home : Landing} />
+            <Route exact path={"/"} component={token ? Homepage : Landing} />
             <Route exact path={"/sign-in"} component={SignIn} />
             <Route exact path={"/sign-up"} component={SignUp} />
-            <Route exact path={"/homepage"} component={Homepage} />
             <Route exact path={"/cart"} component={Cart} />
             <Route exact path={"/checkout"} component={Checkout} />
             <Route exact path={"/thank-you"} component={ThankYou} />

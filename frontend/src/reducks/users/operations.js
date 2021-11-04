@@ -1,13 +1,5 @@
-import API, { LOGIN_USER_KEY } from "../../API";
-import {
-	signUpAction,
-	signUpError,
-	signInAction,
-	signInError,
-	updateProfileAction,
-	updateProfileError,
-	updateBudgetAction,
-} from "./actions";
+import API, { LOGIN_USER_KEY } from '../../API';
+import { clearErrorsAction, signInAction, signInError, signUpAction, signUpError } from './actions';
 
 const api = new API();
 
@@ -20,46 +12,18 @@ export const fetchUserFromLocalStorage = () => {
 	};
 };
 
-export const signUp = (data = {}) => {
+export const signUp = (data = {}, onSuccess = null) => {
 	return async (dispatch) => {
 		return api
 			.signUp(data)
 			.then((response) => {
 				localStorage.setItem(LOGIN_USER_KEY, JSON.stringify(response));
 				dispatch(signUpAction(response));
+				onSuccess();
+				clearErrorsAction()
 			})
 			.catch((error) => {
 				dispatch(signUpError(error.response.data));
-			});
-	};
-};
-
-export const updateProfile = (data = {}, id) => {
-	return async (dispatch) => {
-		return api
-			.updateProfile(data, id)
-			.then((response) => {
-				localStorage.setItem(
-					LOGIN_USER_KEY,
-					JSON.stringify(response)
-				);
-				dispatch(updateProfileAction(response));
-			})
-			.catch((error) => {
-				dispatch(updateProfileError(error.response.data));
-			});
-	};
-};
-
-export const updateBudget = (data = {}, id) => {
-	return async (dispatch) => {
-		return api
-			.updateBudget(data, id)
-			.then((response) => {
-				dispatch(updateBudgetAction(response));
-			})
-			.catch((error) => {
-				console.error(error)
 			});
 	};
 };
@@ -72,6 +36,7 @@ export const signIn = (data = {}, onSuccess = null) => {
 				localStorage.setItem(LOGIN_USER_KEY, JSON.stringify(response));
 				dispatch(signInAction(response));
 				onSuccess();
+				clearErrorsAction()
 			})
 			.catch((error) => {
 				dispatch(signInError(error.response.data));

@@ -8,13 +8,36 @@ import CategoryImage001 from "../assets/images/category001.png";
 import CategoryImage002 from "../assets/images/category002.png";
 import CategoryImage003 from "../assets/images/category003.png";
 import CategoryImage004 from "../assets/images/category004.png";
-import PlusIcon from "../assets/images/plus.svg";
 import OfferImage001 from "../assets/images/offer001.png";
 import OfferImage002 from "../assets/images/offer002.png";
 import OfferImage003 from "../assets/images/offer003.png";
 import OfferImage004 from "../assets/images/offer004.png";
+import Empty from "../components/default/Empty";
+import CategoryCard from "../components/landing/CategoryCard";
 
 export default function Landing() {
+	const categories = [
+		{
+			id: 1,
+			name: 'T-Shirts',
+			image: CategoryImage001
+		},
+		{
+			id: 2,
+			name: 'Shirts',
+			image: CategoryImage002
+		},
+		{
+			id: 3,
+			name: 'Jeans',
+			image: CategoryImage003
+		},
+		{
+			id: 4,
+			name: 'Hats',
+			image: CategoryImage004
+		},
+	]
 	return (
 		<>
 			<Header />
@@ -33,8 +56,8 @@ export default function Landing() {
 					<p>Get Up To 50% off </p>
 					<p>On all products and brands</p>
 					<div>
-						<Link to="#">Shop Women's</Link>
-						<Link to="#">Shop Men's</Link>
+						<Link to="/sign-up">Shop Women's</Link>
+						<Link to="/sign-up" data>Shop Men's</Link>
 					</div>
 				</div>
 				<div className="landing-container">
@@ -42,30 +65,10 @@ export default function Landing() {
 						<p className="category-title">Categories</p>
 
 						<div className="category">
-							<div className="category-items">
-								<img className="category-image" src={CategoryImage001} alt="" />
-								<div className="white-transparent"></div>
-								<img className="category-plus" src={PlusIcon} alt="" />
-								<p className="category-text">T-Shirts</p>
-							</div>
-							<div className="category-items">
-								<img className="category-image" src={CategoryImage002} alt="" />
-								<div className="white-transparent"></div>
-								<img className="category-plus" src={PlusIcon} alt="" />
-								<p className="category-text">Shirts</p>
-							</div>
-							<div className="category-items">
-								<img className="category-image" src={CategoryImage003} alt="" />
-								<div className="white-transparent"></div>
-								<img className="category-plus" src={PlusIcon} alt="" />
-								<p className="category-text">Jeans</p>
-							</div>
-							<div className="category-items">
-								<img className="category-image" src={CategoryImage004} alt="" />
-								<div className="white-transparent"></div>
-								<img className="category-plus" src={PlusIcon} alt="" />
-								<p className="category-text">Hats</p>
-							</div>
+							{ categories && categories.length > 0 
+								? categories.map((c, index)=> <CategoryCard key={index} data={c} />)
+								: <Empty />
+							}
 						</div>
 					</div>
 					<div className="content-container">
