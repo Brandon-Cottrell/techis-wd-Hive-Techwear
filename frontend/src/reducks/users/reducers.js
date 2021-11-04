@@ -30,16 +30,13 @@ export const UserReducer = (state = initialState.user, action) => {
                     password: null
                 }
             }
-        case Actions.UPDATE_PROFILE:
+        case Actions.CLEAR_ERRORS:
             return {
-                ...state,
-                ...action.payload.user,
+                errors: {
+                    email: null,
+                    password: null
+                }
             }
-        case Actions.UPDATE_BUDGET:
-            return {
-                ...state,
-            }
-            
         default:
             return state;
     }

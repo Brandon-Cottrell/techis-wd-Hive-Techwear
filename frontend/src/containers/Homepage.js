@@ -29,9 +29,9 @@ export default function Homepage() {
                             <div className="right-border">
                                 <p className="homepage-category-text">Category Lists</p>
                                 <div className="category-list">
-                                    <Link to="#">Shirts</Link>
-                                    <Link to="#">Bottoms</Link>
-                                    <Link to="#">Hats</Link>
+                                    <Link to="/">Shirts</Link>
+                                    <Link to="/">Bottoms</Link>
+                                    <Link to="/">Hats</Link>
                                 </div>
                             </div>
                         </div>
@@ -146,11 +146,11 @@ export default function Homepage() {
                         </div>
                     </div>
                     <div className="product-pagination">
-                        <div className="active"><Link to="#">1</Link></div>
-                        <div><Link to="#">2</Link></div>
-                        <div><Link to="#">3</Link></div>
-                        <div><Link to="#">...</Link></div>
-                        <div><Link to="#">8</Link></div>
+                        <div className="active"><Link to="/">1</Link></div>
+                        <div><Link to="/">2</Link></div>
+                        <div><Link to="/">3</Link></div>
+                        <div><Link to="/">...</Link></div>
+                        <div><Link to="/">8</Link></div>
                     </div>
                 </div>
             </section>

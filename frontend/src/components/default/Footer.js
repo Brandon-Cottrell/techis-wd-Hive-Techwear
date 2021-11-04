@@ -12,13 +12,13 @@ const Footer = () => {
 					<div className="footer-content">
 						<Link to="/sign-up">Sign up</Link>
 						<Link to="/sign-in">Sign in</Link>
-						<Link to="#">Item lists</Link>
+						<Link to="/">Item lists</Link>
 					</div>
 				</div>
 				<div className="footer-container">
 					<h2>Support</h2>
 					<div className="footer-content">
-						<Link to="#">Contact Us</Link>
+						<Link to="/">Contact Us</Link>
 					</div>
 				</div>
 			</div>

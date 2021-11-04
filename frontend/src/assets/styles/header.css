@@ -1,5 +1,5 @@
 .header {
-    z-index: 9999;
+    z-index: 2;
     padding: 8px 16px;
     position: fixed;
     left: 0;
@@ -210,5 +210,11 @@
 
     .custom-search-input {
         font-size: 18px !important;
+    }
+}
+
+@media (max-width: 415px) {
+    .menu__box {
+        width: 230px;
     }
 }
