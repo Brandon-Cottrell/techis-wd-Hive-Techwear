@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Footer from "../components/default/Footer";
@@ -9,7 +9,8 @@ import { signIn } from "../reducks/users/operations";
 
 export default function SignIn() {
 	const dispatch = useDispatch();
-	let history = useHistory();
+	const history = useHistory();
+	const { search } = useLocation();
 	const selector = useSelector((state) => state);
 	const errors = getUser(selector).errors;
 
@@ -32,12 +33,12 @@ export default function SignIn() {
 
 	const onSubmitSignIn = () => {
 		setIsLoading(true);
-		dispatch(signIn(values, () => history.push("/")));
+		dispatch(signIn(values, () => history.push({ pathname: "/", search })));
 		setIsLoading(false);
 	};
 	return (
 		<>
-			<Header />
+			<Header search={search} />
 			<section className="main-wrapper">
 				<div className="sign-in">
 					<p className="title">SIGN IN</p>
@@ -68,7 +69,7 @@ export default function SignIn() {
 							{isLoading ? "SIGNING IN..." : "SIGN IN"}
 						</button>
 						<p>
-							New Customer ? <Link to="/sign-up">Register</Link>
+							New Customer ? <Link to={{ pathname: "sign-up", search }}>Register</Link>
 						</p>
 					</div>
 				</div>

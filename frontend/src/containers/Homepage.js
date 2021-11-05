@@ -1,18 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Footer from "../components/default/Footer";
-import Header from "../components/default/Header";
-import ProductImage001 from "../assets/images/women001.png";
-import ProductImage002 from "../assets/images/women002.png";
-import ProductImage003 from "../assets/images/women003.png";
-import ProductImage004 from "../assets/images/women004.png";
-import ProductImage005 from "../assets/images/women005.png";
-import ProductImage006 from "../assets/images/women006.png";
-import ProductImage007 from "../assets/images/women007.png";
-import ProductImage008 from "../assets/images/women008.png";
-import ProductImage009 from "../assets/images/women009.png";
+import React from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+
+import ProductImage001 from '../assets/images/women001.png';
+import ProductImage002 from '../assets/images/women002.png';
+import ProductImage003 from '../assets/images/women003.png';
+import ProductImage004 from '../assets/images/women004.png';
+import ProductImage005 from '../assets/images/women005.png';
+import ProductImage006 from '../assets/images/women006.png';
+import ProductImage007 from '../assets/images/women007.png';
+import ProductImage008 from '../assets/images/women008.png';
+import ProductImage009 from '../assets/images/women009.png';
+import Footer from '../components/default/Footer';
+import Header from '../components/default/Header';
+
 
 export default function Homepage() {
+    const history = useHistory()
+    console.log("history", history);
+
 	return (
 		<>
 			<Header />
