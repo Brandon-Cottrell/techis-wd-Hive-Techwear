@@ -4,13 +4,13 @@ from apps.users.serializers import UserSerializer
 from apps.products.serializers import ProductSerializer
 
 class CartSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only = True)
     class Meta:
         model = Cart
         fields = [
-            'user',
+            'id',
             'product',
-            'quantity'
+            'quantity',
+            'total_price'
         ]
         depth = 1
 

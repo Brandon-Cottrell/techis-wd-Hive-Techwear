@@ -15,3 +15,7 @@ class Cart(models.Model):
     quantity = models.IntegerField (
         'Quantity', blank=False, null=False
     )
+
+    @property
+    def total_price(self):
+        return self.quantity * self.product.price
