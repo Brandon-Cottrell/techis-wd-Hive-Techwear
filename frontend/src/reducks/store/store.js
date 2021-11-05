@@ -1,6 +1,7 @@
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { applyMiddleware, combineReducers, compose, createStore as reduxCreateStore } from 'redux';
 import thunk from 'redux-thunk';
+import { CategoriesReducer } from '../category/reducers';
 
 import { UserReducer } from '../users/reducers';
 
@@ -9,6 +10,7 @@ export default function createStore(history) {
         combineReducers({
             router: connectRouter(history),
             user: UserReducer,
+            categories: CategoriesReducer
        }),
        compose(
         applyMiddleware(

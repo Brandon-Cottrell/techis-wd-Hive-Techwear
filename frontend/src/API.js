@@ -33,6 +33,7 @@ api.interceptors.response.use(
 		return response.data;
 	},
 	(error) => {
+		console.log("error.response",error);
 		if (error.response.status === 401) {
 			localStorage.removeItem(LOGIN_USER_KEY);
 		}
@@ -58,5 +59,10 @@ export default class API {
 			formData.append(key, signInBody[key]);
 		}
 		return api.post("/users/signin/", formData);
+	};
+
+	// Category
+	getCategories = () => {
+		return api.get("/categories/")
 	};
 }

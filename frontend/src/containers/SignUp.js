@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 
 import Footer from "../components/default/Footer";
@@ -10,7 +10,8 @@ import { signUp } from "../reducks/users/operations";
 import { getUser } from "../reducks/users/selectors";
 
 export default function SignUp() {
-	let history = useHistory();
+	const history = useHistory();
+	const { search } = useLocation();
 	const dispatch = useDispatch();
 	const selector = useSelector((state) => state);
 	const errors = getUser(selector).errors;
@@ -41,12 +42,12 @@ export default function SignUp() {
 		}
 
 		setIsLoading(true);
-		dispatch(signUp(values, () => history.push("/")));
+		dispatch(signUp(values, () => history.push({ pathname: "/", search })));
 		setIsLoading(false);
 	};
 	return (
 		<>
-			<Header />
+			<Header search={search} />
 			<section className="main-wrapper">
 				<div className="sign-up">
 					<p className="title">SIGN UP</p>
@@ -93,12 +94,14 @@ export default function SignUp() {
 							value={values.password_confirmation}
 							onChange={handleInputChange}
 						/>
-						{errors.password_confirm ? <span className="error-text">{errors.password_confirm[0]}</span> : null}
+						{errors.password_confirm ? (
+							<span className="error-text">{errors.password_confirm[0]}</span>
+						) : null}
 						<button className="custom-btn" onClick={onSubmitSignUp}>
 							{isLoading ? "SIGNING UP..." : "SIGN UP"}
 						</button>
 						<p>
-							Have an account ? <Link to="/sign-in">Sign In</Link>
+							Have an account ? <Link to={{ pathname: "/sign-in", search }}>Sign In</Link>
 						</p>
 					</div>
 				</div>
