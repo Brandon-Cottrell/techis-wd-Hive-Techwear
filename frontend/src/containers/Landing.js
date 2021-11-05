@@ -1,43 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Footer from "../components/default/Footer";
-import Header from "../components/default/Header";
-import BannerImage from "../assets/images/Banner.png";
-import BannerMobileImage from "../assets/images/Banner-Mobile.png";
-import CategoryImage001 from "../assets/images/category001.png";
-import CategoryImage002 from "../assets/images/category002.png";
-import CategoryImage003 from "../assets/images/category003.png";
-import CategoryImage004 from "../assets/images/category004.png";
-import OfferImage001 from "../assets/images/offer001.png";
-import OfferImage002 from "../assets/images/offer002.png";
-import OfferImage003 from "../assets/images/offer003.png";
-import OfferImage004 from "../assets/images/offer004.png";
-import Empty from "../components/default/Empty";
-import CategoryCard from "../components/landing/CategoryCard";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import BannerMobileImage from '../assets/images/Banner-Mobile.png';
+import BannerImage from '../assets/images/Banner.png';
+import OfferImage001 from '../assets/images/offer001.png';
+import OfferImage002 from '../assets/images/offer002.png';
+import OfferImage003 from '../assets/images/offer003.png';
+import OfferImage004 from '../assets/images/offer004.png';
+import Empty from '../components/default/Empty';
+import Footer from '../components/default/Footer';
+import Header from '../components/default/Header';
+import CategoryCard from '../components/landing/CategoryCard';
+import { fetchCategories } from '../reducks/category/operations';
+import { getCategories } from '../reducks/category/selectors';
 
 export default function Landing() {
-	const categories = [
-		{
-			id: 1,
-			name: 'T-Shirts',
-			image: CategoryImage001
-		},
-		{
-			id: 2,
-			name: 'Shirts',
-			image: CategoryImage002
-		},
-		{
-			id: 3,
-			name: 'Jeans',
-			image: CategoryImage003
-		},
-		{
-			id: 4,
-			name: 'Hats',
-			image: CategoryImage004
-		},
-	]
+	const dispatch = useDispatch();
+	const selector = useSelector((state) => state);
+	const categories = getCategories(selector);
+
+	useEffect(() => {
+		dispatch(fetchCategories());
+		// eslint-disable-next-line
+	}, []);
+
 	return (
 		<>
 			<Header />
@@ -56,8 +43,8 @@ export default function Landing() {
 					<p>Get Up To 50% off </p>
 					<p>On all products and brands</p>
 					<div>
-						<Link to="/sign-up">Shop Women's</Link>
-						<Link to="/sign-up" data>Shop Men's</Link>
+						<Link to="sign-in?type=women">Shop Women's</Link>
+						<Link to="sign-in?type=men">Shop Men's</Link>
 					</div>
 				</div>
 				<div className="landing-container">
@@ -65,10 +52,11 @@ export default function Landing() {
 						<p className="category-title">Categories</p>
 
 						<div className="category">
-							{ categories && categories.length > 0 
-								? categories.map((c, index)=> <CategoryCard key={index} data={c} />)
-								: <Empty />
-							}
+							{categories.results && categories.results.length > 0 ? (
+								categories.results.map((c, index) => <CategoryCard key={index} data={c} />)
+							) : (
+								<Empty />
+							)}
 						</div>
 					</div>
 					<div className="content-container">

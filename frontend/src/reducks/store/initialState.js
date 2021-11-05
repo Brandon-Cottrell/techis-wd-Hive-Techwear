@@ -6,6 +6,9 @@ const initialState = {
             password_confirm: null,
         }
     },
+    categories: {
+        results: [],
+    },
 }
 
 export default initialState;
