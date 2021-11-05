@@ -36,3 +36,7 @@ class Order(models.Model):
     total_qty = models.IntegerField(
         'Total Quantity', blank=False, null=False
     )
+
+    @property
+    def order_items(self):
+        return self.related_order.all()

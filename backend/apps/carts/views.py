@@ -11,10 +11,11 @@ from apps.users.mixins import CustomLoginRequiredMixin
 from config.helpers.error_response import error_response
 
 class CartList(CustomLoginRequiredMixin, generics.ListAPIView):
-    queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['product', 'user']
+    pagination_class = None
+
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.login_user.id)
 
 class CartAdd(CustomLoginRequiredMixin, generics.CreateAPIView):
     queryset = Cart.objects.all()

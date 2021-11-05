@@ -1,19 +1,34 @@
-from django.db import models
-from django.db.models import fields
+from apps.order_items.serializers import OrderItemSerializer
 from .models import Order
 from rest_framework import serializers
-from apps.users.serializers import UserSerializer
-from apps.products.serializers import ProductSerializer
+from apps.order_items.models import OrderItem
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    order_items = OrderItemSerializer(many=True)
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = [
+            'user',
+            'customer_name',
+            'customer_phone',
+            'address',
+            'pin_code',
+            'building_type',
+            'city',
+            'state',
+            'total_price',
+            'total_qty',
+            'order_items'
+        ]
     
     def create(self, validated_data):
-        return validated_data
-        # order = Order.objects.create()
+        order_items = validated_data.pop('order_items')
+        order = Order.objects.create(**validated_data)
+        for item in order_items:
+            OrderItem.objects.create(**item, order=order)
+
+        return order
 
 class OrderListSerializer(serializers.ModelSerializer):
     
