@@ -24,9 +24,6 @@
     background-size: 22%;
 }
 
-
-
-
 .homepage-title {
     font-size: 32px;
     font-weight: 600;
@@ -45,7 +42,7 @@
 }
 
 
-.category-list a {
+/* .category-list a {
     text-decoration: none;
     display: block;
     font-size: 18px;
@@ -53,11 +50,31 @@
     border-bottom: 1px solid #000;
     margin: 0 24px 24px 0;
     padding: 0 0 8px 28px;
+} */
+
+.category-list ul {
+    padding: 0;
 }
 
-.category-list a.active {
+.category-list li {
+    list-style: none;
+    display: block;
+    font-size: 18px;
+    color: #000;
+    border-bottom: 1px solid #000;
+    margin: 0 24px 24px 0;
+    padding: 0 0 8px 28px;
+    cursor: pointer;
+}
+
+.category-list li.active {
     font-weight: 600;
 }
+
+
+/* .category-list a.active {
+    font-weight: 600;
+} */
 
 .right-border {
     border-right: 1px solid #000;
@@ -67,8 +84,8 @@
 .product-container {
 	display: grid;
     margin: auto;
-	grid-gap: 50px;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-gap: 100px;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .product-card {
@@ -86,6 +103,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: auto;
 }
 
 .product-title {
@@ -145,6 +163,7 @@
 }
 
 .product-pagination div {
+    list-style: none;
     text-align: center;
     display: flex;
     width: 40px;
@@ -154,6 +173,7 @@
     margin: 0 12px;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .product-pagination div.active {
@@ -168,6 +188,11 @@
 }
 
 @media only screen and (max-width: 1500px) {
+    .product-container {
+        grid-gap: 0;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
     .product-card {
         width: 90%;
     }
@@ -178,6 +203,12 @@
 }
 
 @media only screen and (max-width: 1024px) {
+  
+    .product-container {
+        grid-gap: 0;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .homepage-container {
         column-gap: 30px;
     }
@@ -222,11 +253,6 @@
 }
 
 @media only screen and (max-width: 815px) {
-    .product-container {
-        grid-gap: 0;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .product-price {
         font-size: 16px;
     }
@@ -261,7 +287,13 @@
         margin: 24px 0;
     }
 
-    .category-list a {
+    /* .category-list a {
+        font-size: 14px;
+        margin: 0 18px 18px 0;
+        padding: 0 0 8px 18px;
+    } */
+
+    .category-list li {
         font-size: 14px;
         margin: 0 18px 18px 0;
         padding: 0 0 8px 18px;
@@ -324,7 +356,11 @@
         font-size: 14px;
     }
 
-    .category-list a {
+    /* .category-list a {
+        font-size: 12px;
+    } */
+
+    .category-list li {
         font-size: 12px;
     }
 

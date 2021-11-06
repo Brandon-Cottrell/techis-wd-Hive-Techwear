@@ -73,6 +73,18 @@
     .checkout-form-container .custom-input{
         width: 50%;
     }
+
+    .order-detail {
+        width: 80%;
+    }
+
+    .total-order {
+        width: 80%;
+    }
+
+    .checkout-line {
+        width: 75%;
+    }
 }
 
 @media only screen and (max-width: 768px) {

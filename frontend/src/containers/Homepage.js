@@ -1,165 +1,129 @@
-import React from 'react';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router";
+import { Link } from "react-router-dom";
 
-import ProductImage001 from '../assets/images/women001.png';
-import ProductImage002 from '../assets/images/women002.png';
-import ProductImage003 from '../assets/images/women003.png';
-import ProductImage004 from '../assets/images/women004.png';
-import ProductImage005 from '../assets/images/women005.png';
-import ProductImage006 from '../assets/images/women006.png';
-import ProductImage007 from '../assets/images/women007.png';
-import ProductImage008 from '../assets/images/women008.png';
-import ProductImage009 from '../assets/images/women009.png';
-import Footer from '../components/default/Footer';
-import Header from '../components/default/Header';
-
+import Empty from "../components/default/Empty";
+import Footer from "../components/default/Footer";
+import Header from "../components/default/Header";
+import Pagination from "../components/default/Pagination";
+import ProductCard from "../components/homepage/ProductCard";
+import { Female, Male } from "../constants";
+import { fetchCarts } from "../reducks/cart/operations";
+import { getCarts } from "../reducks/cart/selectors";
+import { fetchCategories } from "../reducks/category/operations";
+import { getCategories } from "../reducks/category/selectors";
+import { fetchProducts } from "../reducks/product/operations";
+import { getProducts } from "../reducks/product/selectors";
 
 export default function Homepage() {
-    const history = useHistory()
-    console.log("history", history);
+	const query = new URLSearchParams(useLocation().search);
+	const queryType = query.get("type");
+	const queryCategoryId = query.get("categoryId");
+	const queryCategoryName = query.get("categoryName");
+
+	const history = useHistory();
+
+	const dispatch = useDispatch();
+	const selector = useSelector((state) => state);
+	const products = getProducts(selector);
+	const categories = getCategories(selector);
+	const carts = getCarts(selector);
+	const [type, setType] = useState(queryType);
+	const [category, setCategory] = useState({ id: queryCategoryId, name: queryCategoryName });
+	const [activeCategory, setActiveCategory] = useState(+queryCategoryId);
+
+	const title = type ? (type === "male" ? Male : Female) : "Products List";
+
+	useEffect(() => {
+		dispatch(fetchProducts({ type, category_id: category.id }, () => history.replace({ search: "" })));
+		dispatch(fetchCategories());
+		dispatch(fetchCarts());
+		// eslint-disable-next-line
+	}, [type, category]);
+
+	const categoryHandler = (category, isReset = false) => {
+		if (isReset) {
+			setCategory({ id: null, name: null });
+			setActiveCategory(0);
+			return;
+		}
+		setCategory({ id: category.id, name: category.name });
+		setActiveCategory(category.id);
+	};
 
 	return (
 		<>
-			<Header />
+			<Header totalCart={carts.totalCart} />
 			<section className="main-wrapper">
-                <div className="homepage">
-                    <div className="homepage-container">
-                        <div className="homepage-content">
-                            <select className="gender-select">
-                                <option value="">FILTER BY GENDER</option>
-                                <option value="Men's">Men's</option>
-                                <option value="Women's">Women's</option>
-                            </select>
+				<div className="homepage">
+					<div className="homepage-container">
+						<div className="homepage-content">
+							<select onChange={(e) => setType(e.target.value)} className="gender-select">
+								<option value="">FILTER BY GENDER</option>
+								<option selected={type === 'male'} value="male">Men's</option>
+								<option selected={type === 'female'} value="female">Women's</option>
+							</select>
 
-                            <div className="right-border">
-                                <p className="homepage-category-text">Category Lists</p>
-                                <div className="category-list">
-                                    <Link to="/">Shirts</Link>
-                                    <Link to="/">Bottoms</Link>
-                                    <Link to="/">Hats</Link>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="homepage-content">
-                            <div className="homepage-title">Women's</div>
-                            <div className="product-container">
-                                <div className="product-card">
-                                    <img className="product-image" src={ProductImage001} alt=""/>
-                                    <div className="product-content">
-                                        <p className="product-title">Adidas Yeezy</p>
-                                        <p className="product-description">Adidas originals women style</p>
-                                    </div>
-                                    <div className="price-content">
-                                        <p className="product-price">$1500</p>
-                                        <button className="add-cart-btn">Add +</button>
-                                        {/* <div className="added-cart">
-                                            <span> - </span>
-                                            <span className="margin-top-4"> 2 </span>
-                                            <span className="margin-top-4"> + </span>
-                                        </div> */}
-                                    </div>
-                                </div>
-                                <div className="product-card">
-                                    <img className="product-image" src={ProductImage002} alt=""/>
-                                    <div className="product-content">
-                                        <p className="product-title">Adidas Yeezy</p>
-                                        <p className="product-description">Adidas originals women style</p>
-                                    </div>
-                                    <div className="price-content">
-                                        <p className="product-price">$1500</p>
-                                        <button className="add-cart-btn">Add +</button>
-                                    </div>
-                                </div>
-                                <div className="product-card">
-                                    <img className="product-image" src={ProductImage003} alt=""/>
-                                    <div className="product-content">
-                                        <p className="product-title">Adidas Yeezy</p>
-                                        <p className="product-description">Adidas originals women style</p>
-                                    </div>
-                                    <div className="price-content">
-                                        <p className="product-price">$1500</p>
-                                        <button className="add-cart-btn">Add +</button>
-                                    </div>
-                                </div>
-                                <div className="product-card">
-                                    <img className="product-image" src={ProductImage004} alt=""/>
-                                    <div className="product-content">
-                                        <p className="product-title">Adidas Yeezy</p>
-                                        <p className="product-description">Adidas originals women style</p>
-                                    </div>
-                                    <div className="price-content">
-                                        <p className="product-price">$1500</p>
-                                        <button className="add-cart-btn">Add +</button>
-                                    </div>
-                                </div>
-                                <div className="product-card">
-                                    <img className="product-image" src={ProductImage005} alt=""/>
-                                    <div className="product-content">
-                                        <p className="product-title">Adidas Yeezy</p>
-                                        <p className="product-description">Adidas originals women style</p>
-                                    </div>
-                                    <div className="price-content">
-                                        <p className="product-price">$1500</p>
-                                        <button className="add-cart-btn">Add +</button>
-                                    </div>
-                                </div>
-                                <div className="product-card">
-                                    <img className="product-image" src={ProductImage006} alt=""/>
-                                    <div className="product-content">
-                                        <p className="product-title">Adidas Yeezy</p>
-                                        <p className="product-description">Adidas originals women style</p>
-                                    </div>
-                                    <div className="price-content">
-                                        <p className="product-price">$1500</p>
-                                        <button className="add-cart-btn">Add +</button>
-                                    </div>
-                                </div>
-                                <div className="product-card">
-                                    <img className="product-image" src={ProductImage007} alt=""/>
-                                    <div className="product-content">
-                                        <p className="product-title">Adidas Yeezy</p>
-                                        <p className="product-description">Adidas originals women style</p>
-                                    </div>
-                                    <div className="price-content">
-                                        <p className="product-price">$1500</p>
-                                        <button className="add-cart-btn">Add +</button>
-                                    </div>
-                                </div>
-                                <div className="product-card">
-                                    <img className="product-image" src={ProductImage008} alt=""/>
-                                    <div className="product-content">
-                                        <p className="product-title">Adidas Yeezy</p>
-                                        <p className="product-description">Adidas originals women style</p>
-                                    </div>
-                                    <div className="price-content">
-                                        <p className="product-price">$1500</p>
-                                        <button className="add-cart-btn">Add +</button>
-                                    </div>
-                                </div>
-                                <div className="product-card">
-                                    <img className="product-image" src={ProductImage009} alt=""/>
-                                    <div className="product-content">
-                                        <p className="product-title">Adidas Yeezy</p>
-                                        <p className="product-description">Adidas originals women style</p>
-                                    </div>
-                                    <div className="price-content">
-                                        <p className="product-price">$1500</p>
-                                        <button className="add-cart-btn">Add +</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="product-pagination">
-                        <div className="active"><Link to="/">1</Link></div>
-                        <div><Link to="/">2</Link></div>
-                        <div><Link to="/">3</Link></div>
-                        <div><Link to="/">...</Link></div>
-                        <div><Link to="/">8</Link></div>
-                    </div>
-                </div>
-            </section>
+							<div className="right-border">
+								<p className="homepage-category-text">Category Lists</p>
+								<div className="category-list">
+									<ul>
+										<li
+											className={activeCategory === 0 ? "active" : ""}
+											onClick={() => categoryHandler(null, true)}
+										>
+											All
+										</li>
+										{categories.results && categories.results.length > 0 ? (
+											categories.results.map((c) => (
+												<li
+													className={activeCategory === c.id ? "active" : ""}
+													onClick={() => categoryHandler(c)}
+													key={c.id}
+													to="#"
+												>
+													{c.name}
+												</li>
+											))
+										) : (
+											<Empty />
+										)}
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div className="homepage-content">
+							<div className="homepage-title">
+								{title} {category.name && `- ${category.name}`}
+							</div>
+							<div className="product-container">
+								{products.results && products.results.length > 0 ? (
+									products.results.map((p) => {
+										const cart = carts.results.find(c=> c.product.id === p.id) || null;
+										return <ProductCard key={p.id} products={p} cart={cart} />
+									})
+								) : (
+									<Empty />
+								)}
+							</div>
+						</div>
+					</div>
+					<div className="product-pagination">
+						{products.results && products.results.length > 0 ? (
+							<Pagination
+								metadata={{
+									totalPages: products.total_pages,
+									current: products.current,
+									currentQuery: { type, category_id: category.id },
+								}}
+							/>
+						) : (
+							""
+						)}
+					</div>
+				</div>
+			</section>
 			<Footer />
 		</>
 	);

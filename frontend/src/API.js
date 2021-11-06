@@ -33,7 +33,7 @@ api.interceptors.response.use(
 		return response.data;
 	},
 	(error) => {
-		console.log("error.response",error);
+		console.log("error.response", error);
 		if (error.response.status === 401) {
 			localStorage.removeItem(LOGIN_USER_KEY);
 		}
@@ -63,6 +63,38 @@ export default class API {
 
 	// Category
 	getCategories = () => {
-		return api.get("/categories/")
+		return api.get("/categories/");
 	};
+
+	// Product
+	getProducts = (query = {}) => {
+		return api.get("/products/", { params: query, requireToken: true });
+	};
+
+	// Cart
+	getCarts = (query = {}) => {
+		return api.get("/carts/", { params: query, requireToken: true });
+	};
+
+	addCart = (addCartBody) => {
+		const formData = new FormData();
+		for (const key in addCartBody) {
+			formData.append(key, addCartBody[key]);
+		}
+		return api.post("/carts/", formData, { requireToken: true });
+	};
+
+	updateCart = (updateCartBody, cartId) => {
+		const formData = new FormData();
+		for (const key in updateCartBody) {
+			formData.append(key, updateCartBody[key]);
+		}
+		return api.put(`/carts/update/${cartId}/`, formData, { requireToken: true });
+	};
+
+	// Checkout
+	checkoutOrder = (checkoutOrderBody) => {
+		return api.post("/orders/add/", checkoutOrderBody, { requireToken: true });
+	};
+
 }
