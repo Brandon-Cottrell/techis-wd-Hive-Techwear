@@ -17,4 +17,6 @@ class OrderAdd(CustomLoginRequiredMixin, generics.CreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
-    
+    def post(self, request, *args, **kwargs):
+        request.data['user'] = request.login_user.id
+        return super().create(request, *args, **kwargs)
