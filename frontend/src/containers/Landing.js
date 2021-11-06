@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import BannerMobileImage from '../assets/images/Banner-Mobile.png';
-import BannerImage from '../assets/images/Banner.png';
-import OfferImage001 from '../assets/images/offer001.png';
-import OfferImage002 from '../assets/images/offer002.png';
-import OfferImage003 from '../assets/images/offer003.png';
-import OfferImage004 from '../assets/images/offer004.png';
-import Empty from '../components/default/Empty';
-import Footer from '../components/default/Footer';
-import Header from '../components/default/Header';
-import CategoryCard from '../components/landing/CategoryCard';
-import { fetchCategories } from '../reducks/category/operations';
-import { getCategories } from '../reducks/category/selectors';
+import BannerMobileImage from "../assets/images/Banner-Mobile.png";
+import BannerImage from "../assets/images/Banner.png";
+import OfferImage001 from "../assets/images/offer001.png";
+import OfferImage002 from "../assets/images/offer002.png";
+import OfferImage003 from "../assets/images/offer003.png";
+import OfferImage004 from "../assets/images/offer004.png";
+import Empty from "../components/default/Empty";
+import Footer from "../components/default/Footer";
+import Header from "../components/default/Header";
+import CategoryCard from "../components/landing/CategoryCard";
+import { fetchCategories } from "../reducks/category/operations";
+import { getCategories } from "../reducks/category/selectors";
 
 export default function Landing() {
 	const dispatch = useDispatch();
@@ -43,8 +43,8 @@ export default function Landing() {
 					<p>Get Up To 50% off </p>
 					<p>On all products and brands</p>
 					<div>
-						<Link to="sign-in?type=women">Shop Women's</Link>
-						<Link to="sign-in?type=men">Shop Men's</Link>
+						<Link to={{ pathname: "sign-in", search: 'type=female' }}>Shop Women's</Link>
+						<Link to={{ pathname: "sign-in", search: 'type=male' }}>Shop Men's</Link>
 					</div>
 				</div>
 				<div className="landing-container">

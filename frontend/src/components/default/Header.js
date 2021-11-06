@@ -11,7 +11,8 @@ import SignInLink from "./SignInLink";
 import SignOutLink from "./SignOutLink";
 import SignUpLink from "./SignUpLink";
 
-export default function Header() {
+export default function Header(props) {
+	const { totalCart } = props;
 	const history = useHistory();
 	const { pathname } = history.location;
 	const selector = useSelector((state) => state);
@@ -21,7 +22,7 @@ export default function Header() {
 	return (
 		<header className="header">
 			<Link to="/">
-				<img className="logo" src={Logo} alt="" />
+				<img className="logo" src={Logo} alt="HIVETechwear" />
 			</Link>
 			<input id="menu__toggle" type="checkbox" />
 			<label className="menu__btn" htmlFor="menu__toggle">
@@ -35,7 +36,7 @@ export default function Header() {
 				) : token ? (
 					<>
 						<Search />
-						<CartLink />
+						<CartLink totalCart={totalCart} />
 						<SignOutLink />
 					</>
 				) : (

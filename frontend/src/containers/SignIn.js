@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { useHistory, useLocation } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import Footer from "../components/default/Footer";
-import Header from "../components/default/Header";
-import { getUser } from "../reducks/users/selectors";
-import { signIn } from "../reducks/users/operations";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
+
+import Footer from '../components/default/Footer';
+import Header from '../components/default/Header';
+import { signIn } from '../reducks/users/operations';
+import { getUser } from '../reducks/users/selectors';
 
 export default function SignIn() {
 	const dispatch = useDispatch();
@@ -65,6 +66,7 @@ export default function SignIn() {
 							onChange={handleInputChange}
 						/>
 						{errors.password ? <span className="error-text">{errors.password[0]}</span> : null}
+						{errors.error ? <span className="error-text">{errors.error}</span> : null}
 						<button className="custom-btn" onClick={onSubmitSignIn}>
 							{isLoading ? "SIGNING IN..." : "SIGN IN"}
 						</button>

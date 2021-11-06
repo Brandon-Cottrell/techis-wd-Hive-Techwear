@@ -1,12 +1,11 @@
 import initialState from "../store/initialState";
 import * as Actions from "./actions";
 
-export const CategoriesReducer = (state = initialState.categories, action) => {
+export const OrdersReducer = (state = initialState.orders, action) => {
 	switch (action.type) {
-		case Actions.FETCH_CATEGORIES:
+		case Actions.CHECKOUT_ORDER:
 			return {
 				...state,
-				results: [...action.payload.categories],
 			};
 		default:
 			return state;
