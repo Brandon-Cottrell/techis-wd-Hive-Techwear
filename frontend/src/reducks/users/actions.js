@@ -28,6 +28,16 @@ export const signInAction = (user) => {
     };
 };
 
+export const SIGN_USER_STORE = "SIGN_USER_STORE";
+export const signUserStoreAction = (user) => {
+    return {
+        type: SIGN_USER_STORE,
+        payload: {
+            user
+        }
+    };
+};
+
 export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
 export const signInError = (errors) => {
     return {

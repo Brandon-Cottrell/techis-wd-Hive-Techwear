@@ -21,3 +21,18 @@ export const updateCartAction = (cart) => {
 		payload: { cart },
 	};
 };
+
+export const REMOVE_CART = "REMOVE_CART";
+export const removeCartAction = (cartId) => {
+	return {
+		type: REMOVE_CART,
+		payload: { cartId },
+	};
+};
+
+export const CLEAR_CARTS = "CLEAR_CARTS";
+export const clearCartsAction = () => {
+	return {
+		type: CLEAR_CARTS,
+	};
+};

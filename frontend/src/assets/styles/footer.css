@@ -4,6 +4,7 @@
     background-color: #373836;
     color: #FFF;
     flex-direction: column;
+    margin-top: auto;
 }
 
 .footer-main {

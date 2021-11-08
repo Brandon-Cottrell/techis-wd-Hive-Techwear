@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
-import { Link } from "react-router-dom";
 
 import Empty from "../components/default/Empty";
 import Footer from "../components/default/Footer";
 import Header from "../components/default/Header";
 import Pagination from "../components/default/Pagination";
 import ProductCard from "../components/homepage/ProductCard";
+import ProductListCard from "../components/homepage/ProductListCard";
 import { Female, Male } from "../constants";
 import { fetchCarts } from "../reducks/cart/operations";
 import { getCarts } from "../reducks/cart/selectors";
@@ -20,7 +20,7 @@ export default function Homepage() {
 	const query = new URLSearchParams(useLocation().search);
 	const queryType = query.get("type");
 	const queryCategoryId = query.get("categoryId");
-	const queryCategoryName = query.get("categoryName");
+	const queryCategoryName = query.get("categoryName") || null;
 
 	const history = useHistory();
 
@@ -33,14 +33,23 @@ export default function Homepage() {
 	const [category, setCategory] = useState({ id: queryCategoryId, name: queryCategoryName });
 	const [activeCategory, setActiveCategory] = useState(+queryCategoryId);
 
+	const [search, setSearch] = useState(null);
+
 	const title = type ? (type === "male" ? Male : Female) : "Products List";
+	const defaultSelect = type ? (type === "male" ? "male" : "female") : "FILTER BY GENDER";
+	const isEmptyCategory = categories.results && categories.results.length > 0 ? false : true;
+	const isEmptyProduct = products.results && products.results.length > 0 ? false : true;
 
 	useEffect(() => {
-		dispatch(fetchProducts({ type, category_id: category.id }, () => history.replace({ search: "" })));
+		dispatch(fetchProducts({ type, category_id: category.id, search }, () => history.replace({ search: "" })));
+		// eslint-disable-next-line
+	}, [type, category, search]);
+
+	useEffect(() => {
 		dispatch(fetchCategories());
 		dispatch(fetchCarts());
 		// eslint-disable-next-line
-	}, [type, category]);
+	}, []);
 
 	const categoryHandler = (category, isReset = false) => {
 		if (isReset) {
@@ -54,15 +63,19 @@ export default function Homepage() {
 
 	return (
 		<>
-			<Header totalCart={carts.totalCart} />
+			<Header totalCart={carts.totalCart} setSearch={setSearch} />
 			<section className="main-wrapper">
 				<div className="homepage">
 					<div className="homepage-container">
 						<div className="homepage-content">
-							<select onChange={(e) => setType(e.target.value)} className="gender-select">
+							<select
+								defaultValue={defaultSelect}
+								onChange={(e) => setType(e.target.value)}
+								className="gender-select"
+							>
 								<option value="">FILTER BY GENDER</option>
-								<option selected={type === 'male'} value="male">Men's</option>
-								<option selected={type === 'female'} value="female">Women's</option>
+								<option value="male">Men's</option>
+								<option value="female">Women's</option>
 							</select>
 
 							<div className="right-border">
@@ -75,7 +88,7 @@ export default function Homepage() {
 										>
 											All
 										</li>
-										{categories.results && categories.results.length > 0 ? (
+										{!isEmptyCategory &&
 											categories.results.map((c) => (
 												<li
 													className={activeCategory === c.id ? "active" : ""}
@@ -85,10 +98,7 @@ export default function Homepage() {
 												>
 													{c.name}
 												</li>
-											))
-										) : (
-											<Empty />
-										)}
+											))}
 									</ul>
 								</div>
 							</div>
@@ -97,20 +107,32 @@ export default function Homepage() {
 							<div className="homepage-title">
 								{title} {category.name && `- ${category.name}`}
 							</div>
-							<div className="product-container">
-								{products.results && products.results.length > 0 ? (
-									products.results.map((p) => {
-										const cart = carts.results.find(c=> c.product.id === p.id) || null;
-										return <ProductCard key={p.id} products={p} cart={cart} />
-									})
+							{!isEmptyProduct ? (
+								category.name && !type ? (
+									<>
+										<ProductListCard
+											productType="female"
+											labelType={Female}
+											products={products.results}
+											carts={carts.results}
+										/>
+										<ProductListCard
+											productType="male"
+											labelType={Male}
+											products={products.results}
+											carts={carts.results}
+										/>
+									</>
 								) : (
-									<Empty />
-								)}
-							</div>
+									<ProductListCard products={products.results} carts={carts.results} />
+								)
+							) : (
+								<Empty message="Products are unavailable." />
+							)}
 						</div>
 					</div>
 					<div className="product-pagination">
-						{products.results && products.results.length > 0 ? (
+						{!isEmptyProduct ? (
 							<Pagination
 								metadata={{
 									totalPages: products.total_pages,

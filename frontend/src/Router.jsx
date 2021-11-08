@@ -22,6 +22,7 @@ const Router = () => {
         // eslint-disable-next-line
     }, []);
 
+
     return (
         <Switch>
             <Route exact path={"/"} component={token ? Homepage : Landing} />

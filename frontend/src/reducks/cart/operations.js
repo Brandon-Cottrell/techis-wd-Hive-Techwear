@@ -1,5 +1,5 @@
-import API from '../../API';
-import { addCartAction, fetchCartsAction, updateCartAction } from './actions';
+import API from "../../API";
+import { addCartAction, clearCartsAction, fetchCartsAction, removeCartAction, updateCartAction } from "./actions";
 
 const api = new API();
 
@@ -24,5 +24,16 @@ export const updateCart = (updateCartBody, cartId) => {
 		return api.updateCart(updateCartBody, cartId).then((cart) => {
 			dispatch(updateCartAction(cart));
 		});
+	};
+};
+export const removeCart = (cartId) => {
+	return (dispatch) => {
+		dispatch(removeCartAction(cartId));
+	};
+};
+
+export const clearCarts = () => {
+	return (dispatch) => {
+		dispatch(clearCartsAction());
 	};
 };

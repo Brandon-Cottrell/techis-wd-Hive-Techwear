@@ -15,46 +15,49 @@ export default function SignOutLink() {
 	return (
 		<>
 			<li onClick={() => setOpenModalSignOut(true)}>
-				<Link className="menu__item" to="/" >
+				<Link className="menu__item" to="/">
 					<img className="sign-out-icon" src={SignOutIcon} alt="" />
 					Sign Out
 				</Link>
 			</li>
-			{
-				ReactDOM.createPortal(
-					<div id="custom-modal" className={`custom-modal ${openModalSignOut ? "" : "modal-hide"}`}>
-						<div
-							id="custom-modal-close"
-							onClick={() => setOpenModalSignOut(false)}
-							className="custom-modal--bg"
-						></div>
-						<div className="custom-modal--container">
-							<div className="custom-modal--content">
-								<div className="modal-content">
-									<strong>Are you sure to log out?</strong>
-									<div>
-										<button
-											className="custom-btn mr-1 pl-6 pr-6"
-											onClick={(e) => {
-												dispatch(signOutAction());
-												localStorage.removeItem(LOGIN_USER_KEY);
-												setOpenModalSignOut(false);
-												history.push("/");
-											}}
-										>
-											Yes
-										</button>
-										<button className="custom-btn ml-1 pl-6 pr-6" onClick={() => setOpenModalSignOut(false)}>
-											No
-										</button>
+			{openModalSignOut
+				? ReactDOM.createPortal(
+						<div id="custom-modal" className={`custom-modal ${openModalSignOut ? "" : "modal-hide"}`}>
+							<div
+								id="custom-modal-close"
+								onClick={() => setOpenModalSignOut(false)}
+								className="custom-modal--bg"
+							></div>
+							<div className="custom-modal--container">
+								<div className="custom-modal--content">
+									<div className="modal-content">
+										<strong>Are you sure to log out?</strong>
+										<div>
+											<button
+												className="custom-btn mr-1 pl-6 pr-6"
+												onClick={(e) => {
+													dispatch(signOutAction());
+													localStorage.removeItem(LOGIN_USER_KEY);
+													setOpenModalSignOut(false);
+													history.push("/");
+												}}
+											>
+												Yes
+											</button>
+											<button
+												className="custom-btn ml-1 pl-6 pr-6"
+												onClick={() => setOpenModalSignOut(false)}
+											>
+												No
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>,
-					document.getElementById('portal-root')
-				)
-			}
+						</div>,
+						document.getElementById("portal-root")
+				  )
+				: ""}
 		</>
 	);
 }
