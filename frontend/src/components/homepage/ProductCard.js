@@ -1,21 +1,29 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React from "react";
+import { useDispatch } from "react-redux";
 
-import { updateCart } from '../../reducks/cart/operations';
+import { addCart, removeCart, updateCart } from "../../reducks/cart/operations";
 
 export default function ProductCard(props) {
-	const { name, description, price, image } = props.products;
+	const { id, name, description, price, image } = props.products;
 	let quantity = props.cart ? props.cart.quantity : 0;
 	const cartId = props.cart ? props.cart.id : 0;
+
 	const dispatch = useDispatch();
+
+	const addToCart = () => {
+		dispatch(addCart({ quantity: 1, product: id }));
+	};
 
 	const increaseCart = () => {
 		++quantity;
 		dispatch(updateCart({ quantity }, cartId));
 	};
 
-    const decreaseCart = () => {
+	const decreaseCart = () => {
 		--quantity;
+		if (quantity <= 0) {
+			dispatch(removeCart(cartId));
+		}
 		dispatch(updateCart({ quantity }, cartId));
 	};
 	return (
@@ -31,10 +39,14 @@ export default function ProductCard(props) {
 					<div className="added-cart">
 						<span onClick={decreaseCart}> - </span>
 						<span className="margin-top-4"> {quantity} </span>
-						<span onClick={increaseCart} className="margin-top-4"> + </span>
+						<span onClick={increaseCart} className="margin-top-4">
+							+
+						</span>
 					</div>
 				) : (
-					<button className="add-cart-btn">Add +</button>
+					<button onClick={addToCart} className="add-cart-btn">
+						Add +
+					</button>
 				)}
 			</div>
 		</div>

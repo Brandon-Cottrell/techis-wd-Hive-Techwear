@@ -20,6 +20,15 @@ const initialState = {
 
 	orders: {
 		results: [],
+		errors: {
+			customer_name: null,
+			customer_phone: null,
+			address: null,
+			pin_code: null,
+			building_type: null,
+			city: null,
+			state: null,
+		},
 	},
 
 	products: {

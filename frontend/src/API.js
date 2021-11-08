@@ -81,7 +81,7 @@ export default class API {
 		for (const key in addCartBody) {
 			formData.append(key, addCartBody[key]);
 		}
-		return api.post("/carts/", formData, { requireToken: true });
+		return api.post("/carts/add/", formData, { requireToken: true });
 	};
 
 	updateCart = (updateCartBody, cartId) => {

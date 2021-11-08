@@ -9,11 +9,22 @@ export const CartsReducer = (state = initialState.carts, action) => {
 				results: action.payload.carts,
 				totalPrice: getTotalCartPrice(action.payload.carts),
 				totalCart: action.payload.carts.length,
-				totalCartItems: getTotalCartItems(action.payload.carts)
+				totalCartItems: getTotalCartItems(action.payload.carts),
 			};
+
+		case Actions.ADD_CART:
+			const newAddedCarts = [...state.results, action.payload.cart];
+			return {
+				...state,
+				results: newAddedCarts,
+				totalPrice: getTotalCartPrice(newAddedCarts),
+				totalCart: newAddedCarts.length,
+				totalCartItems: getTotalCartItems(newAddedCarts),
+			};
+
 		case Actions.UPDATE_CART:
 			const prevCarts = state.results;
-			const newCarts = prevCarts.map((cart) => {
+			const newUpdatedCarts = prevCarts.map((cart) => {
 				if (cart.id === action.payload.cart.id) {
 					cart.quantity = action.payload.cart.quantity;
 					cart.total_price = action.payload.cart.quantity * cart.product.price;
@@ -22,10 +33,27 @@ export const CartsReducer = (state = initialState.carts, action) => {
 			});
 			return {
 				...state,
-				results: newCarts,
-				totalPrice: getTotalCartPrice(newCarts),
-				totalCart: newCarts.length,
-				totalCartItems: getTotalCartItems(newCarts)
+				results: newUpdatedCarts,
+				totalPrice: getTotalCartPrice(newUpdatedCarts),
+				totalCart: newUpdatedCarts.length,
+				totalCartItems: getTotalCartItems(newUpdatedCarts),
+			};
+		case Actions.REMOVE_CART:
+			const newRemovedCarts = state.results.filter((cart) => cart.id !== action.payload.cartId);
+			return {
+				...state,
+				results: newRemovedCarts,
+				totalPrice: getTotalCartPrice(newRemovedCarts),
+				totalCart: newRemovedCarts.length,
+				totalCartItems: getTotalCartItems(newRemovedCarts),
+			};
+		case Actions.CLEAR_CARTS:
+			return {
+				...state,
+				results: [],
+				totalPrice: 0,
+				totalCart: 0,
+				totalCartItems: 0,
 			};
 		default:
 			return state;

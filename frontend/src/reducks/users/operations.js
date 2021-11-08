@@ -1,13 +1,13 @@
 import API, { LOGIN_USER_KEY } from '../../API';
-import { clearErrorsAction, signInAction, signInError, signUpAction, signUpError } from './actions';
+import { clearErrorsAction, signInAction, signInError, signUpAction, signUpError, signUserStoreAction } from './actions';
 
 const api = new API();
 
 export const fetchUserFromLocalStorage = () => {
-	return async (dispatch) => {
+	return (dispatch) => {
 		const userJSON = localStorage.getItem(LOGIN_USER_KEY);
 		if (userJSON && userJSON.token !== "") {
-			dispatch(signInAction(JSON.parse(userJSON)));
+			dispatch(signUserStoreAction(JSON.parse(userJSON)));
 		}
 	};
 };

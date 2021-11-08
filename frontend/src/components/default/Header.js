@@ -1,18 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
-import Logo from "../../assets/images/HIVETechwear.svg";
-import { getUser } from "../../reducks/users/selectors";
-import CartLink from "./CartLink";
-import Search from "./Search";
-import SignInLink from "./SignInLink";
-import SignOutLink from "./SignOutLink";
-import SignUpLink from "./SignUpLink";
+import Logo from '../../assets/images/HIVETechwear.svg';
+import { getUser } from '../../reducks/users/selectors';
+import CartLink from './CartLink';
+import Search from './Search';
+import SignInLink from './SignInLink';
+import SignOutLink from './SignOutLink';
+import SignUpLink from './SignUpLink';
 
 export default function Header(props) {
-	const { totalCart } = props;
+	const { totalCart, setSearch } = props;
 	const history = useHistory();
 	const { pathname } = history.location;
 	const selector = useSelector((state) => state);
@@ -35,7 +35,7 @@ export default function Header(props) {
 					<SignInLink />
 				) : token ? (
 					<>
-						<Search />
+						<Search setSearch={setSearch} />
 						<CartLink totalCart={totalCart} />
 						<SignOutLink />
 					</>
