@@ -1,6 +1,7 @@
 from apps.order_items.serializers import OrderItemSerializer
 from apps import users
 from apps.users.serializers import UserSerializer
+from apps.carts.models import Cart
 from .models import Order
 from rest_framework import serializers
 from apps.order_items.models import OrderItem
@@ -29,6 +30,7 @@ class OrderSerializer(serializers.ModelSerializer):
         order = Order.objects.create(**validated_data)
         for item in order_items:
             OrderItem.objects.create(**item, order=order)
+            Cart.objects.filter(product=item['product'], user=validated_data['user']).delete()
 
         return order
 
