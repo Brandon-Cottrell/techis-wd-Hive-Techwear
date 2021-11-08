@@ -53,17 +53,25 @@ class CartUpdate(CustomLoginRequiredMixin, generics.UpdateAPIView):
     lookup_field = 'id'
 
     def put(self, request, *args, **kwargs):
-
         self.get_serializer_class().validate(self, request.data)
+        quantity = int(request.data['quantity'])
 
         id = self.kwargs['id']
-        cart = Cart.objects.filter(id=id).first()
-        if cart is None:
+        cart = Cart.objects.filter(id=id)
+        if cart.first() is None:
             return error_response('Cart not found.', status.HTTP_400_BAD_REQUEST)
 
-        request.data._mutable = True
-        request.data['user'] = request.login_user.id
-        request.data['product'] = cart.product_id
+        if quantity < 1:
+            cart.delete()
+            return Response({'message': 'Deleted successfully.'})
 
-        return self.partial_update(request, *args, **kwargs)
+        cart.update(
+            quantity = quantity
+        )
+
+        # Convert Model to Serializer
+        serializer = CartListSerializer(cart[0])
+
+        # Response data as Dict
+        return Response(serializer.data)
 
