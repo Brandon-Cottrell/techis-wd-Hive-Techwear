@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
+import ReactPaginate from 'react-paginate';
 
 import Empty from "../components/default/Empty";
 import Footer from "../components/default/Footer";
 import Header from "../components/default/Header";
-import Pagination from "../components/default/Pagination";
-import ProductCard from "../components/homepage/ProductCard";
 import ProductListCard from "../components/homepage/ProductListCard";
 import { Female, Male } from "../constants";
 import { fetchCarts } from "../reducks/cart/operations";
@@ -32,8 +31,8 @@ export default function Homepage() {
 	const [type, setType] = useState(queryType);
 	const [category, setCategory] = useState({ id: queryCategoryId, name: queryCategoryName });
 	const [activeCategory, setActiveCategory] = useState(+queryCategoryId);
-
 	const [search, setSearch] = useState(null);
+	const [page, setPage] = useState(1);
 
 	const title = type ? (type === "male" ? Male : Female) : "Products List";
 	const defaultSelect = type ? (type === "male" ? "male" : "female") : "FILTER BY GENDER";
@@ -41,9 +40,9 @@ export default function Homepage() {
 	const isEmptyProduct = products.results && products.results.length > 0 ? false : true;
 
 	useEffect(() => {
-		dispatch(fetchProducts({ type, category_id: category.id, search }, () => history.replace({ search: "" })));
+		dispatch(fetchProducts({ type, category_id: category.id, search, page }, () => history.replace({ search: "" })));
 		// eslint-disable-next-line
-	}, [type, category, search]);
+	}, [type, category, search, page]);
 
 	useEffect(() => {
 		dispatch(fetchCategories());
@@ -52,6 +51,7 @@ export default function Homepage() {
 	}, []);
 
 	const categoryHandler = (category, isReset = false) => {
+		setPage(1)
 		if (isReset) {
 			setCategory({ id: null, name: null });
 			setActiveCategory(0);
@@ -132,17 +132,21 @@ export default function Homepage() {
 						</div>
 					</div>
 					<div className="product-pagination">
-						{!isEmptyProduct ? (
-							<Pagination
-								metadata={{
-									totalPages: products.total_pages,
-									current: products.current,
-									currentQuery: { type, category_id: category.id },
-								}}
-							/>
-						) : (
-							""
-						)}
+						<ReactPaginate
+							breakLabel="..."
+							onPageChange={e => setPage(e.selected + 1)}
+							forcePage={(page - 1)}
+							pageRangeDisplayed={3}
+							pageCount={products.total_pages}
+							renderOnZeroPageCount={null}
+							containerClassName="pagination-container"
+							pageClassName="page-item"
+							breakClassName="page-item"
+							pageLinkClassName="p-1"
+							previousClassName="d-none"
+							nextClassName="d-none"
+							activeClassName="page-active"
+						/>
 					</div>
 				</div>
 			</section>

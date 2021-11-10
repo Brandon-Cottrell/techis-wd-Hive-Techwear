@@ -154,20 +154,15 @@
     font-weight: 600;
 }
 
-.product-pagination {
-    text-align: center;
-    padding: 24px;
+.pagination-container {
     display: flex;
-    flex-direction: row;
     justify-content: center;
 }
 
-.product-pagination div {
+.page-item {
     list-style: none;
     text-align: center;
     display: flex;
-    width: 40px;
-    height: 40px;
     border: 1px solid #707070;
     background-color: #FFF;
     margin: 0 12px;
@@ -176,15 +171,9 @@
     cursor: pointer;
 }
 
-.product-pagination div.active {
+.page-active {
     background-color: #D5DBE6;
     font-weight: 600;
-}
-
-
-.product-pagination a {
-    text-decoration: none;
-    color: #000;
 }
 
 @media only screen and (max-width: 1500px) {

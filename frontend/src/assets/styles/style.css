@@ -47,6 +47,12 @@ body {
 	font-weight: bold;
 }
 
+/* display */
+
+.d-none {
+	display: none !important;
+}
+
 /* text */
 
 .text-white {
