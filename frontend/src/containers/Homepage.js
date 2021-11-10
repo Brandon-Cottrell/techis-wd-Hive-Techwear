@@ -143,6 +143,7 @@ export default function Homepage() {
 							pageClassName="page-item"
 							breakClassName="page-item"
 							pageLinkClassName="page-link"
+							breakLinkClassName="page-link"
 							previousClassName="d-none"
 							nextClassName="d-none"
 							activeClassName="page-active"
