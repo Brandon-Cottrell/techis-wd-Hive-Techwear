@@ -142,7 +142,7 @@ export default function Homepage() {
 							containerClassName="pagination-container"
 							pageClassName="page-item"
 							breakClassName="page-item"
-							pageLinkClassName="p-1"
+							pageLinkClassName="page-link"
 							previousClassName="d-none"
 							nextClassName="d-none"
 							activeClassName="page-active"
