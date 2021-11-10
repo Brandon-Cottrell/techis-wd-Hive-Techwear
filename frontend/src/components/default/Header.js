@@ -12,13 +12,13 @@ import SignOutLink from './SignOutLink';
 import SignUpLink from './SignUpLink';
 
 export default function Header(props) {
-	const { totalCart, setSearch } = props;
+	const { totalCart, setSearch, setPage } = props;
 	const history = useHistory();
 	const { pathname } = history.location;
 	const selector = useSelector((state) => state);
 	const user = getUser(selector);
 	const token = user ? user.token : null;
-
+	
 	return (
 		<header className="header">
 			<Link to="/">
@@ -28,6 +28,8 @@ export default function Header(props) {
 			<label className="menu__btn" htmlFor="menu__toggle">
 				<span></span>
 			</label>
+			
+			
 			<ul className="menu__box">
 				{pathname === "/sign-in" ? (
 					<SignUpLink />
@@ -35,7 +37,7 @@ export default function Header(props) {
 					<SignInLink />
 				) : token ? (
 					<>
-						<Search setSearch={setSearch} />
+						{setSearch && <Search setSearch={setSearch} setPage={setPage}/>}
 						<CartLink totalCart={totalCart} />
 						<SignOutLink />
 					</>

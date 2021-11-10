@@ -62,10 +62,11 @@ export default function Checkout() {
 				() => {
 					history.push("/thank-you");
 					dispatch(clearCheckoutOrderErrorAction());
+					dispatch(clearCarts());
 				}
 			)
 		);
-		dispatch(clearCarts());
+		
 		setIsLoading(false);
 	};
 

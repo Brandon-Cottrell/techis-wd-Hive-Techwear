@@ -1,6 +1,6 @@
 from django.db import models
-from django.db.models import base
 from apps.users.models import User
+from django.utils import timezone
 
 class Order(models.Model):
     class Meta(object):
@@ -37,10 +37,7 @@ class Order(models.Model):
         'Total Quantity', blank=False, null=False
     )
     created_at = models.DateTimeField(
-        'Creation Date', blank=True, auto_now_add=True
-    )
-    updated_at = models.DateTimeField(
-        'Update Date', blank=True, auto_now=True
+        'Creation Date', blank=True, default=timezone.now
     )
 
     @property

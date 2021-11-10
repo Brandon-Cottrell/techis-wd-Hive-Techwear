@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from "react-paginate";
 
 import Empty from "../components/default/Empty";
 import Footer from "../components/default/Footer";
@@ -39,8 +39,18 @@ export default function Homepage() {
 	const isEmptyCategory = categories.results && categories.results.length > 0 ? false : true;
 	const isEmptyProduct = products.results && products.results.length > 0 ? false : true;
 
+	const femaleProduct = products.results.filter((p) => p.type === "female");
+	const maleProduct = products.results.filter((p) => p.type === "male");
+
+	const onPageChange = (e) => {
+		setPage(e.selected + 1);
+		window.scrollTo(0, 0);
+}
+
 	useEffect(() => {
-		dispatch(fetchProducts({ type, category_id: category.id, search, page }, () => history.replace({ search: "" })));
+		dispatch(
+			fetchProducts({ type, category_id: category.id, search, page }, () => history.replace({ search: "" }))
+		);
 		// eslint-disable-next-line
 	}, [type, category, search, page]);
 
@@ -51,7 +61,7 @@ export default function Homepage() {
 	}, []);
 
 	const categoryHandler = (category, isReset = false) => {
-		setPage(1)
+		setPage(1);
 		if (isReset) {
 			setCategory({ id: null, name: null });
 			setActiveCategory(0);
@@ -63,7 +73,7 @@ export default function Homepage() {
 
 	return (
 		<>
-			<Header totalCart={carts.totalCart} setSearch={setSearch} />
+			<Header totalCart={carts.totalCart} setSearch={setSearch} setPage={setPage} />
 			<section className="main-wrapper">
 				<div className="homepage">
 					<div className="homepage-container">
@@ -110,18 +120,20 @@ export default function Homepage() {
 							{!isEmptyProduct ? (
 								category.name && !type ? (
 									<>
-										<ProductListCard
-											productType="female"
-											labelType={Female}
-											products={products.results}
-											carts={carts.results}
-										/>
-										<ProductListCard
-											productType="male"
-											labelType={Male}
-											products={products.results}
-											carts={carts.results}
-										/>
+										{femaleProduct.length > 0 && (
+											<ProductListCard
+												labelType={Female}
+												products={femaleProduct}
+												carts={carts.results}
+											/>
+										)}
+										{maleProduct.length > 0 && (
+											<ProductListCard
+												labelType={Male}
+												products={maleProduct}
+												carts={carts.results}
+											/>
+										)}
 									</>
 								) : (
 									<ProductListCard products={products.results} carts={carts.results} />
@@ -134,8 +146,8 @@ export default function Homepage() {
 					<div className="product-pagination">
 						<ReactPaginate
 							breakLabel="..."
-							onPageChange={e => setPage(e.selected + 1)}
-							forcePage={(page - 1)}
+							onPageChange={onPageChange}
+							forcePage={page - 1}
 							pageRangeDisplayed={3}
 							pageCount={products.total_pages}
 							renderOnZeroPageCount={null}

@@ -15,7 +15,7 @@ export default function SignOutLink() {
 	return (
 		<>
 			<li onClick={() => setOpenModalSignOut(true)}>
-				<Link className="menu__item" to="/">
+				<Link className="menu__item" to="#">
 					<img className="sign-out-icon" src={SignOutIcon} alt="" />
 					Sign Out
 				</Link>
