@@ -16,3 +16,9 @@ class OrderItem(models.Model):
     qty = models.IntegerField(
         'Quantity', blank=False, null=False
     )
+    created_at = models.DateTimeField(
+        'Creation Date', blank=True, auto_now_add=True
+    )
+    updated_at = models.DateTimeField(
+        'Update Date', blank=True, auto_now=True
+    )

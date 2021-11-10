@@ -6,7 +6,6 @@ import Empty from "../components/default/Empty";
 import Footer from "../components/default/Footer";
 import Header from "../components/default/Header";
 import Pagination from "../components/default/Pagination";
-import ProductCard from "../components/homepage/ProductCard";
 import ProductListCard from "../components/homepage/ProductListCard";
 import { Female, Male } from "../constants";
 import { fetchCarts } from "../reducks/cart/operations";
