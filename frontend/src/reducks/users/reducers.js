@@ -37,6 +37,7 @@ export const UserReducer = (state = initialState.user, action) => {
 			};
 		case Actions.CLEAR_ERRORS:
 			return {
+				...state,
 				errors: {
 					email: null,
 					password: null,

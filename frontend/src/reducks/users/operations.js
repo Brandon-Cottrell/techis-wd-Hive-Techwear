@@ -1,5 +1,5 @@
 import API, { LOGIN_USER_KEY } from '../../API';
-import { clearErrorsAction, signInAction, signInError, signUpAction, signUpError, signUserStoreAction } from './actions';
+import { signInAction, signInError, signUpAction, signUpError, signUserStoreAction } from './actions';
 
 const api = new API();
 
@@ -20,7 +20,6 @@ export const signUp = (data = {}, onSuccess = null) => {
 				localStorage.setItem(LOGIN_USER_KEY, JSON.stringify(response));
 				dispatch(signUpAction(response));
 				onSuccess();
-				clearErrorsAction()
 			})
 			.catch((error) => {
 				dispatch(signUpError(error.response.data));
@@ -36,7 +35,6 @@ export const signIn = (data = {}, onSuccess = null) => {
 				localStorage.setItem(LOGIN_USER_KEY, JSON.stringify(response));
 				dispatch(signInAction(response));
 				onSuccess();
-				clearErrorsAction()
 			})
 			.catch((error) => {
 				dispatch(signInError(error.response.data));

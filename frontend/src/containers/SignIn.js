@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router";
+import { Link } from "react-router-dom";
 
-import Footer from '../components/default/Footer';
-import Header from '../components/default/Header';
-import { signIn } from '../reducks/users/operations';
-import { getUser } from '../reducks/users/selectors';
+import Footer from "../components/default/Footer";
+import Header from "../components/default/Header";
+import { clearErrorsAction } from "../reducks/users/actions";
+import { signIn } from "../reducks/users/operations";
+import { getUser } from "../reducks/users/selectors";
 
 export default function SignIn() {
 	const dispatch = useDispatch();
@@ -34,7 +35,12 @@ export default function SignIn() {
 
 	const onSubmitSignIn = () => {
 		setIsLoading(true);
-		dispatch(signIn(values, () => history.push({ pathname: "/", search })));
+		dispatch(
+			signIn(values, () => {
+				history.push({ pathname: "/", search });
+				dispatch(clearErrorsAction());
+			})
+		);
 		setIsLoading(false);
 	};
 	return (

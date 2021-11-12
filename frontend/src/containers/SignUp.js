@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import Footer from "../components/default/Footer";
 import Header from "../components/default/Header";
-import { signUpError } from "../reducks/users/actions";
+import { clearErrorsAction, signUpError } from "../reducks/users/actions";
 import { signUp } from "../reducks/users/operations";
 import { getUser } from "../reducks/users/selectors";
 
@@ -42,7 +42,12 @@ export default function SignUp() {
 		}
 
 		setIsLoading(true);
-		dispatch(signUp(values, () => history.push({ pathname: "/", search })));
+		dispatch(
+			signUp(values, () => {
+				history.push({ pathname: "/", search });
+				dispatch(clearErrorsAction());
+			})
+		);
 		setIsLoading(false);
 	};
 	return (
