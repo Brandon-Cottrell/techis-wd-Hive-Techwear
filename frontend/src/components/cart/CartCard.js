@@ -26,7 +26,7 @@ export default function CartCard(props) {
 	return (
 		<>
 			<div className="cart-card">
-				<img className="cart-image" src={`https://res.cloudinary.com/techis/${image}`} alt="cart-item" />
+				<img className="cart-image" src={image} alt="cart-item" />
 				<div className="cart-content">
 					<p className="cart-title">{name}</p>
 					<p className="cart-description">{description}</p>
